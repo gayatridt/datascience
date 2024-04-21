@@ -5,7 +5,6 @@ import plotly.figure_factory as ff
 import numpy as np
 
 # Load the dataset
-@st.cache(allow_output_mutation=True)
 def load_data():
     return pd.read_csv("diabetes_prediction_dataset.csv")
 
@@ -25,7 +24,7 @@ selected_diabetes = st.selectbox("Diabetes", ["All"] + list(data["diabetes"].uni
 search_button = st.button("Search")
 
 # Clear button
-clear_button = st.button("Clear Filters")
+clear_button = st.button("Clear Analysis")
 
 if clear_button:
      # Reset filters

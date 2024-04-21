@@ -77,22 +77,19 @@ for column in df_eda_1.columns:
     st.plotly_chart(fig)
 
 
-# Assuming df_eda_1 is your DataFrame containing the relevant columns
-df_eda_1 = df[['age', 'bmi', 'HbA1c_level', 'blood_glucose_level']]
-
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
 # Assuming df_eda_1 is your DataFrame containing the relevant columns
-df_eda_1 = df[['age', 'bmi', 'HbA1c_level', 'blood_glucose_level']]
+df_eda_hist = df[['age', 'bmi', 'HbA1c_level', 'blood_glucose_level']]
 
 # Define the desired layout
 layout_config = {
     'plot_bgcolor': 'rgba(32, 49, 98, 0.9)',  # plot background color
     'paper_bgcolor': 'rgba(32, 49, 98, 0.9)', # paper background color
     'font': {'color': 'white'},  # white font color
-    'title': {'text': f'Histogram of {column}', 'font': {'color': 'white'}},  # white title text
+    'title': {'font': {'color': 'white'}},  # white title text
     'xaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}},  # white x-axis labels and values
     'yaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}}   # white y-axis labels and values
 }
@@ -101,9 +98,9 @@ layout_config = {
 bar_color = '#feffa3'  # Choose a color you prefer, such as 'white' or a hex code
 border_color = 'black'  # Choose the color of the borders, such as 'black' or another color
 
-for column in df_eda_1.columns:
+for column in df_eda_hist.columns:
     # Create a histogram
-    fig = px.histogram(df_eda_1[column], 
+    fig = px.histogram(df_eda_hist[column], 
                        title=f'Histogram of {column}', 
                        nbins=10, 
                        opacity=0.7, 
@@ -153,14 +150,14 @@ import plotly.express as px
 import streamlit as st
 
 # Assuming df_eda_2 is your DataFrame containing the relevant columns
-df_eda_2 = df.drop(['diabetes', 'hypertension', 'heart_disease', 'gender', 'smoking_history'], axis=1)
+df_eda_box = df.drop(['diabetes', 'hypertension', 'heart_disease', 'gender', 'smoking_history'], axis=1)
 
 # Define the desired layout
 layout_config = {
     'plot_bgcolor': 'rgba(32, 49, 98, 0.9)',  # plot background color
     'paper_bgcolor': 'rgba(32, 49, 98, 0.9)', # paper background color
     'font': {'color': 'white'},  # white font color
-    'title': {'text': f'{column.capitalize()} Boxplot', 'font': {'color': 'white'}},  # white title text
+    'title': {'font': {'color': 'white'}},  # white title text
     'xaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}},  # white x-axis labels and values
     'yaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}}   # white y-axis labels and values
 }
@@ -170,9 +167,9 @@ boxplot_fill_color = '#00fff9'  # Bright yellow
 # Define the border and middle line color for the boxplots
 border_color = '#000000'  # Black border color
 
-for column in df_eda_2.columns:
+for column in df_eda_box.columns:
     # Create a boxplot
-    fig = px.box(df_eda_2, y=column, title=f'{column.capitalize()} Boxplot')
+    fig = px.box(df_eda_box, y=column, title=f'{column.capitalize()} Boxplot')
     
     # Update layout with the specified configuration
     fig.update_layout(layout_config)

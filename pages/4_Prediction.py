@@ -69,5 +69,5 @@ def app():
 if __name__ == "__main__":
     app()
 
-#Female	44.0	0	0	never	19.31	6.5	200	1
-#Male	50.0	1	0	current	27.32	5.7	260	1
+#Female	44.0	0	0	never	19.31	6.5	200	1 - dont have
+#Male	50.0	1	0	current	27.32	5.7	260	1 - have

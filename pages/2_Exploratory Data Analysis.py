@@ -6,6 +6,7 @@ import seaborn as sns
 
 df = pd.read_csv("diabetes_prediction_dataset.csv")
 
+# Pie charts
 st.subheader('Pie Chart')
 df_eda = df[['gender', 'hypertension', 'heart_disease', 'smoking_history', 'diabetes']]
 
@@ -14,35 +15,6 @@ for column in df_eda.columns:
     fig = px.pie(names=value_counts.index, values=value_counts.values, title=f'Pie Chart for {column} Distribution')
     fig.update_traces(textinfo='percent+label')
     st.plotly_chart(fig)
-
-# Define custom colors
-colors = px.colors.qualitative.Set3
-
-for column in df_eda.columns:
-    value_counts = df_eda[column].value_counts()
-    
-    # Create a pie chart
-    fig = px.pie(names=value_counts.index, values=value_counts.values, title=f'Pie Chart for {column} Distribution')
-    
-    # Update pie chart colors
-    fig.update_traces(marker=dict(colors=colors))
-    
-    # Update text info
-    fig.update_traces(textinfo='percent+label')
-    
-    # Update layout to set background color
-    fig.update_layout({
-        'plot_bgcolor': 'rgba(32, 49, 98, 0.9)',  # transparent background
-        'paper_bgcolor': 'rgba(32, 49, 98, 0.9)',# transparent background
-        'font': {'color': 'white'},   
-        'legend': {'font': {'color': 'white'}},  # white legend text
-        'title': {'text': f'Pie Chart for {column} Distribution', 'font': {'color': 'white'}}  # white title text
-    
-    })
-    
-    # Show the plotly chart in Streamlit
-    st.plotly_chart(fig)
-
 
 st.subheader('Observations')
 
@@ -58,6 +30,7 @@ Smoking history distribution: About 9.29% of individuals are current smokers. Ap
             
 Diabetes: Approximately 91.5% of individuals in the dataset do not have diabetes (labeled as 0). Around 8.5% of individuals have diabetes (labeled as 1).''')
 
+# Histograms
 
 st.subheader('Histogram')
 
@@ -76,54 +49,6 @@ for column in df_eda_1.columns:
     fig.update_layout(showlegend=False, height=600)  # Hide legend to prevent duplication
     st.plotly_chart(fig)
 
-
-import pandas as pd
-import plotly.express as px
-import streamlit as st
-
-# Assuming df_eda_1 is your DataFrame containing the relevant columns
-df_eda_hist = df[['age', 'bmi', 'HbA1c_level', 'blood_glucose_level']]
-
-# Define the desired layout
-layout_config = {
-    'plot_bgcolor': 'rgba(32, 49, 98, 0.9)',  # plot background color
-    'paper_bgcolor': 'rgba(32, 49, 98, 0.9)', # paper background color
-    'font': {'color': 'white'},  # white font color
-    'title': {'font': {'color': 'white'}},  # white title text
-    'xaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}},  # white x-axis labels and values
-    'yaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}}   # white y-axis labels and values
-}
-
-# Define bar and border colors
-bar_color = '#feffa3'  # Choose a color you prefer, such as 'white' or a hex code
-border_color = 'black'  # Choose the color of the borders, such as 'black' or another color
-
-for column in df_eda_hist.columns:
-    # Create a histogram
-    fig = px.histogram(df_eda_hist[column], 
-                       title=f'Histogram of {column}', 
-                       nbins=10, 
-                       opacity=0.7, 
-                       barnorm='percent', 
-                       barmode='overlay',
-                       text_auto=True,
-                       labels={'count': 'Count', 'percentage': 'Percentage'})
-    
-    # Update traces with the specified border properties
-    fig.update_traces(marker=dict(
-        color=bar_color,
-        line=dict(width=1.5, color=border_color)
-    ))
-    
-    # Update layout with the specified configuration
-    fig.update_layout(layout_config)
-    fig.update_layout(showlegend=False, height=600)  # Hide legend and set figure height
-    
-    # Show the Plotly chart in Streamlit
-    st.plotly_chart(fig)
-
-
-
 st.subheader('Observations')
 
 st.markdown('''Histogram is providing valuable insights into the distribution of continuious numerical variables with columns such as age,bmi,HbA1c_level and blood_glucose_level.  
@@ -136,6 +61,7 @@ st.markdown('''Histogram is providing valuable insights into the distribution of
             
 4.Blood Glucose also has right skewed data as 30000 having glucode ranges from 100 -150 range and in the consequitive range achieves the second largest modal count with 29000.''')
 
+# Box plots
 
 st.subheader('Box Plot')
 
@@ -144,48 +70,6 @@ df_eda_2 = df.drop(['diabetes', 'hypertension', 'heart_disease', 'gender', 'smok
 for column in df_eda_2.columns:
     fig = px.box(df_eda_2, y=column, title=f"{column.capitalize()} Boxplot")
     st.plotly_chart(fig)
-
-import pandas as pd
-import plotly.express as px
-import streamlit as st
-
-# Assuming df_eda_2 is your DataFrame containing the relevant columns
-df_eda_box = df.drop(['diabetes', 'hypertension', 'heart_disease', 'gender', 'smoking_history'], axis=1)
-
-# Define the desired layout
-layout_config = {
-    'plot_bgcolor': 'rgba(32, 49, 98, 0.9)',  # plot background color
-    'paper_bgcolor': 'rgba(32, 49, 98, 0.9)', # paper background color
-    'font': {'color': 'white'},  # white font color
-    'title': {'font': {'color': 'white'}},  # white title text
-    'xaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}},  # white x-axis labels and values
-    'yaxis': {'tickfont': {'color': 'white'}, 'title': {'font': {'color': 'white'}}}   # white y-axis labels and values
-}
-
-# Define the color for the filled boxplots
-boxplot_fill_color = '#00fff9'  # Bright yellow
-# Define the border and middle line color for the boxplots
-border_color = '#000000'  # Black border color
-
-for column in df_eda_box.columns:
-    # Create a boxplot
-    fig = px.box(df_eda_box, y=column, title=f'{column.capitalize()} Boxplot')
-    
-    # Update layout with the specified configuration
-    fig.update_layout(layout_config)
-    
-    # Update the filled color, border, and middle line colors of the boxplots
-    fig.update_traces(marker=dict(
-        color=boxplot_fill_color,  # Set the fill color to bright yellow
-        line=dict(
-            color=border_color  # Set the border color to black
-        )
-    ))
-    
-    # Show the Plotly chart in Streamlit
-    st.plotly_chart(fig)
-
-
 
 st.subheader('Observations')
 

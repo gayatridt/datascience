@@ -2,21 +2,18 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# Load the trained model from the pickle file
-model_path = 'trainedmodel.pkl'  # Replace with the path to your pickle file
+# Loading the trained model from the pickle file
+model_path = 'trainedfinalmodel.pkl'  
 with open(model_path, 'rb') as file:
     trained_model = pickle.load(file)
 
-# Create a Streamlit app
 def app():
-    # Set up the page title and icon
-    st.set_page_config(page_title="Diabetes Prediction", page_icon=":medical_symbol:")
+    st.set_page_config(page_title="Diabetes Prediction")
 
-    # Title and introduction
     st.title("Diabetes Prediction Tool")
     st.markdown("Use this tool to predict whether a person has diabetes based on various health indicators. Fill in the form below and click 'Predict'.")
 
-    # Define input fields for user input in two columns for better layout
+    # Input fields
     col1, col2 = st.columns(2)
 
     with col1:
@@ -35,9 +32,8 @@ def app():
                                               help="Enter the person's blood glucose level")
         gender = st.selectbox("Gender", ["Female", "Male", "Other"], help="Select the person's gender")
 
-    # Create a button for prediction
+    # Button for prediction
     if st.button("Predict"):
-        # Create a DataFrame from the user input
         input_data = pd.DataFrame({
             "age": [age],
             "hypertension": [1 if hypertension == "Yes" else 0],
@@ -51,23 +47,17 @@ def app():
             "gender_Other": [1 if gender == "Other" else 0]
         })
 
-        # Map smoking history to numerical values
+        # Mapping smoking history to numerical values
         input_data["smoking_history"] = input_data["smoking_history"].map(
             {'No Info': 0, 'Never': 1, 'Ever': 2, 'Former': 3, 'Not Current': 4, 'Current': 5}
         )
 
-        # Make a prediction using the loaded model
         prediction = trained_model.predict(input_data)
 
-        # Display the prediction
         if prediction == 0:
             st.success("The prediction is: No Diabetes")
         else:
             st.warning("The prediction is: Diabetes")
 
-# Run the app
 if __name__ == "__main__":
     app()
-
-#Female	44.0	0	0	never	19.31	6.5	200	1 - dont have
-#Male	50.0	1	0	current	27.32	5.7	260	1 - have

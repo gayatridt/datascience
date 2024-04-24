@@ -4,13 +4,13 @@ import plotly.express as px
 import plotly.figure_factory as ff
 import numpy as np
 
-# Load the dataset
+# Loading the dataset
 def load_data():
     return pd.read_csv("diabetes_prediction_dataset.csv")
 
 data = load_data()
 
-# Filter data based on user input
+# Filtering the data based on user input
 st.title("Filter Data")
 
 selected_gender = st.multiselect("Select Gender", data["gender"].unique())
@@ -27,7 +27,7 @@ search_button = st.button("Search")
 clear_button = st.button("Clear Analysis")
 
 if clear_button:
-     # Reset filters
+     # Reset the filters
     selected_gender = ["Male", "Female", "Other"]
     selected_smoking_history = ["Unknown", "Never Smoked", "Formerly Smoked", "Smokes"]
     selected_age = (int(data["age"].min()), int(data["age"].max()))
@@ -36,7 +36,7 @@ if clear_button:
     selected_diabetes = "All"
 
 if search_button:
-    # Apply filters
+    # Apply the filters
     filtered_data = data[
         (data["gender"].isin(selected_gender)) &
         (data["age"].between(selected_age[0], selected_age[1])) &
@@ -46,7 +46,7 @@ if search_button:
         ((selected_diabetes == "All") | (data["diabetes"] == selected_diabetes))
     ]
 
-    # Display filtered data
+    # Displaying filtered data
     st.write("## Filtered Data")
     st.write(filtered_data)
 

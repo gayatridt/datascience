@@ -9,8 +9,8 @@ LOGGER = get_logger(__name__)
 def run():
 
     st.sidebar.success("Select a menu above.")
-    st.title('Data Science Engg. Methods & Tools - Final Project')
-    st.header('Diabetes Prediction')
+    #st.title('Data Science Engg. Methods & Tools - Final Project')
+    st.title('Diabetes Prediction')
     st.subheader('Report Sumary')
 
     df = pd.read_csv("diabetes_prediction_dataset.csv")
